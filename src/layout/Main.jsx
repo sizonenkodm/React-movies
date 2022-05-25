@@ -12,21 +12,33 @@ export default class Main extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=iron man`)
+        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=iron man`)
             .then((response) => response.json())
-            .then(data => this.setState({ movies: data.Search, loading: false }));
+            .then(data => this.setState({ movies: data.Search, loading: false }))
+            .catch((error) => {
+                console.error(error);
+                this.setState({ loading: false });
+            });
     }
 
     searchMovies = (searchName, typeName = 'all') => {
         this.setState({ loading: true });
         if (typeName === 'all') {
-            fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchName}`)
+            fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${searchName}`)
                 .then((response) => response.json())
-                .then(data => this.setState({ movies: data.Search, loading: false }));
+                .then(data => this.setState({ movies: data.Search, loading: false }))
+                .catch((error) => {
+                    console.error(error);
+                    this.setState({ loading: false });
+                });
         } else {
-            fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchName}&type=${typeName}`)
+            fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${searchName}&type=${typeName}`)
                 .then((response) => response.json())
-                .then(data => this.setState({ movies: data.Search, loading: false }));
+                .then(data => this.setState({ movies: data.Search, loading: false }))
+                .catch((error) => {
+                    console.error(error);
+                    this.setState({ loading: false });
+                });
         }
     }
 
